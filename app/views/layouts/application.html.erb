@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>System manager</title>
+    <%= render 'layouts/rails_default' %>
+    <%= render 'layouts/shim' %>
+  </head>
+  <body>
+    <%= render 'layouts/header' %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><%= link_to "Database", '#' %></li>
+            <li><%= link_to "Technologies", '#' %></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-md-10 main">
+          <% flash.each do |message_type, message| %>
+            <div class="alert alert-<%= message_type %>"><%= message %></div>
+          <% end %>
+          <%= yield %>
+          <%= render 'layouts/footer' %>
+          <!-- <%= debug(params) if Rails.env.development? %> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
