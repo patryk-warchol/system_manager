@@ -1,2 +1,40 @@
-<h1>Statics#home</h1>
-<p>Find me in app/views/statics/home.html.erb</p>
+
+<div class="col-md-4">
+  <h1>Technologies</h1>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Technology</th>
+        <th>Version</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @technologies.each do |technology| %>
+          <tr>
+            <%= put_technology(technology) %>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-8">
+  <h1>Projects</h1>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Status</th>
+        <th>Port</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <%= put_project(project) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

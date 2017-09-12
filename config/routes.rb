@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'statics/home'
+  
+  resources :databases
+  resources :projects
+  resources :technologies
 
   get 'statics/help'
 

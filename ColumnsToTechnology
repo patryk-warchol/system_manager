@@ -1,0 +1,2 @@
+      invoke  active_record
+      remove    db/migrate/20170910104419_add.rb

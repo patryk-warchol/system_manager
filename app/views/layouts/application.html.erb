@@ -11,8 +11,25 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><%= link_to "Database", '#' %></li>
-            <li><%= link_to "Technologies", '#' %></li>
+
+            <% if controller_name == "projects" %>
+              <li class="active"><%= link_to "Projects", { controller: 'projects', action: 'index' } %></li>
+            <% else %>
+              <li><%= link_to "Projects", { controller: 'projects', action: 'index' } %></li>
+            <% end %>
+
+            <% if controller_name == "technologies" %>
+              <li class="active"><%= link_to "Technologies", { controller: 'technologies', action: 'index' } %></li>
+            <% else %>
+              <li><%= link_to "Technologies", { controller: 'technologies', action: 'index' } %></li>
+            <% end %>
+            
+            <% if controller_name == "databases" %>
+              <li class="active"><%= link_to "Databases", { controller: 'databases', action: 'index' } %></li>
+            <% else %>
+              <li><%= link_to "Databases", { controller: 'databases', action: 'index' } %></li>
+            <% end %>
+
           </ul>
         </div>
         <div class="col-sm-9 col-md-10 main">
