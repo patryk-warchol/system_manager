@@ -61,6 +61,25 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def start_project
+
+  end
+
+  def stop_project
+    list_of_processes = []
+
+    # list of processes for project_name
+    `ps aux | grep #{params[:name]} | awk '{print $2}'`.split("\n").each do |process_pid|
+      list_of_processes << process_pid
+    end
+
+    list_of_processes.each do |process_pid|
+      `kill -9 #{process_pid}`
+    end
+
+    redirect_to controller: 'statics', action: 'home'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

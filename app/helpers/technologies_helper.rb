@@ -9,10 +9,10 @@ module TechnologiesHelper
 
     if $?.exitstatus.to_s != "0"
       version = "Not found"
-      html_elt << "<td><span class=\"label label-danger\">" + version + "</span></td>"
+      html_elt << "<td><span class=\"label label-default\">" + version + "</span></td>"
     elsif version == "" || version.nil?
       version = "Error"
-      html_elt << "<td><span class=\"label label-default\">" + version + "</span></td>"
+      html_elt << "<td><span class=\"label label-danger\">" + version + "</span></td>"
     else
       html_elt << "<td><span class=\"label label-success\">" + version + "</span></td>"
     end

@@ -1,36 +1,29 @@
 module ProjectsHelper
 
   def put_project(project)
-
+  
     html_elt = ""
     html_elt << "<td>" + project.name + "</td>"
 
-    port_process_pids = `lsof -i tcp:#{project.port} -t`
-    
     running = false
 
-    # verificate if process run
-    if port_process_pids.nil? || port_process_pids == ""
-      # process on the given port doesn't exists
-    else
-      # process run, list of port and loop on each port
-      `lsof -i tcp:#{project.port} -t`.gsub(/\s+/m, ' ').strip.split(" ").each do |port|
-        # grep with term_for_grep
-        ps_port_grep_res = `ps -p #{port} -o comm= | grep "#{project.term_for_grep}"`
-        if $?.exitstatus.to_s == "0"
-          # success
-          if ps_port_grep_res.nil? || ps_port_grep_res == ""
-            # null
-          else
-            # process with term_for_grep found
-            running = true
-          end
-        else
-          # command failed
+    list_of_processes = []
+
+    # list of processes for project_name
+    `ps aux | grep #{project.name} | awk '{print $2}'`.split("\n").each do |process_pid|
+      list_of_processes << process_pid
+    end
+
+    # if a process contain term_for_grep then the process is running
+    list_of_processes.each do |process_pid|
+      `ps -p #{process_pid}`
+      if $?.exitstatus.to_s == "0"
+        if `ps -p #{process_pid} | grep #{project.term_for_grep}`
+          # process with term_for_grep found
+          running = true
         end
       end
     end
-    # end 
 
     if running
       html_elt << "<td><span class=\"label label-success\">Running</span></td>"
@@ -41,14 +34,29 @@ module ProjectsHelper
     html_elt << "<td>" + project.port + "</td>"
 
     if running
-      html_elt << "<td>Stop</td>"
+      html_elt << stop_project_elt(project)
+      # glyphicon glyphicon-remove
     else
-      html_elt << "<td>Start</td>"
+      html_elt << start_project_elt(project)
+      # glyphicon glyphicon-off
     end
 
     return html_elt.html_safe
 
   end
+
+  def start_project_elt(project)
+    html_elt = ""
+    html_elt << "<td>Start</td>"
+    return html_elt
+  end
+
+  def stop_project_elt(project)
+    html_elt = ""
+    html_elt << "<td>" + eval("link_to \"Stop\", { controller: \"projects\", action: \"stop_project\", name: project.name}, class: \"label label-danger\" ") + "</td>"
+    return html_elt
+  end
+
 =begin
   verify if process on port 3000 exists
   
@@ -72,26 +80,23 @@ module ProjectsHelper
     don't kill process
     else 
     kill process
+
+    find all process of app_name
+    foreach process
+    kill process
+    ps aux | grep system_manager | awk '{print $2}'
+
+      list_of_processes.each do |process_pid|
+    puts process_pid
+    `kill -9 #{process_pid}`
+    if $?.exitstatus.to_s == "0"
+      puts "process #{process_pid} killed"
+    else
+      puts "error killing process #{process_pid}"
+    end
+
+  end
+
 =end
-  def put_technology(technology)
-    
-        html_elt = ""
-        html_elt << "<td>" + technology.name + "</td>"
-       
-        version = `#{technology.get_cmd}`
-    
-        if $?.exitstatus.to_s != "0"
-          version = "Not found"
-          html_elt << "<td><span class=\"label label-danger\">" + version + "</span></td>"
-        elsif version == "" || version.nil?
-          version = "Error"
-          html_elt << "<td><span class=\"label label-default\">" + version + "</span></td>"
-        else
-          html_elt << "<td><span class=\"label label-success\">" + version + "</span></td>"
-        end
-    
-        return html_elt.html_safe
-    
-      end
 
 end
