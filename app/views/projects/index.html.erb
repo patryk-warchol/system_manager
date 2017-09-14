@@ -10,6 +10,7 @@
       <th>Port</th>
       <th>Environment</th>
       <th>Term for grep</th>
+      <th>Start command</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
         <td><%= project.port %></td>
         <td><%= project.environment %></td>
         <td><%= project.term_for_grep %></td>
+        <td><%= project.start_cmd %></td>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>

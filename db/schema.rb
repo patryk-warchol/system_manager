@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912222616) do
+ActiveRecord::Schema.define(version: 20170914194007) do
 
   create_table "databases", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170912222616) do
     t.string "port"
     t.string "environment"
     t.string "term_for_grep"
+    t.string "start_cmd"
   end
 
   create_table "technologies", force: :cascade do |t|

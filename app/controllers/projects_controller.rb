@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :start_project, :stop_project]
 
   # GET /projects
   # GET /projects.json
@@ -62,14 +62,22 @@ class ProjectsController < ApplicationController
   end
 
   def start_project
+    start = @project.start_cmd
 
+    start.sub! 'project_path', @project.path
+    start.sub! 'project_name', @project.name 
+
+    #render plain: start
+    system( start )
+
+    redirect_to controller: 'statics', action: 'home'
   end
 
   def stop_project
     list_of_processes = []
 
     # list of processes for project_name
-    `ps aux | grep #{params[:name]} | awk '{print $2}'`.split("\n").each do |process_pid|
+    `ps aux | grep #{@project.name} | awk '{print $2}'`.split("\n").each do |process_pid|
       list_of_processes << process_pid
     end
 
@@ -84,10 +92,11 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :path, :port, :environment, :term_for_grep)
+      params.require(:project).permit(:name, :path, :port, :environment, :term_for_grep, :start_cmd)
     end
 end

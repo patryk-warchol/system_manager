@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :projects
   resources :technologies
 
-  get 'projects/start_project/:name', to: 'projects#start_project'
-  get 'projects/stop_project/:name', to: 'projects#stop_project'
+  get 'projects/start_project/:id', to: 'projects#start_project'
+  get 'projects/stop_project/:id', to: 'projects#stop_project'
 
   get 'statics/help'
 

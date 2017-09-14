@@ -47,56 +47,15 @@ module ProjectsHelper
 
   def start_project_elt(project)
     html_elt = ""
-    html_elt << "<td>Start</td>"
+    #html_elt << "<td>" + eval("link_to \"Start\", { controller: \"projects\", action: \"start_project\", id: project.id}, class: \"label label-success\" ") + "</td>"
+    html_elt << "<td></td>"
     return html_elt
   end
 
   def stop_project_elt(project)
     html_elt = ""
-    html_elt << "<td>" + eval("link_to \"Stop\", { controller: \"projects\", action: \"stop_project\", name: project.name}, class: \"label label-danger\" ") + "</td>"
+    html_elt << "<td>" + eval("link_to \"Stop\", { controller: \"projects\", action: \"stop_project\", id: project.id}, class: \"label label-danger\" ") + "</td>"
     return html_elt
   end
-
-=begin
-  verify if process on port 3000 exists
-  
-      lsof -i tcp:3000 -t
-  
-      if result == ""
-      process don't exists -> run
-      else
-      process run -> kill
-  
-    kill process on port 3000
-  
-    kill -9 $(lsof -i tcp:3000 -t) 
-  
-    lsof -i tcp:3000 -t
-    then
-    ps -p 79593 -o comm=
-    then
-    grep "puma"
-    if result == ""
-    don't kill process
-    else 
-    kill process
-
-    find all process of app_name
-    foreach process
-    kill process
-    ps aux | grep system_manager | awk '{print $2}'
-
-      list_of_processes.each do |process_pid|
-    puts process_pid
-    `kill -9 #{process_pid}`
-    if $?.exitstatus.to_s == "0"
-      puts "process #{process_pid} killed"
-    else
-      puts "error killing process #{process_pid}"
-    end
-
-  end
-
-=end
 
 end
